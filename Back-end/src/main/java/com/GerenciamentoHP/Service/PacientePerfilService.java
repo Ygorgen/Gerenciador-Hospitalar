@@ -2,6 +2,9 @@ package com.GerenciamentoHP.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import com.GerenciamentoHP.DTO.RespostaErro;
+import com.GerenciamentoHP.Exceptions.RegistroDuplicadoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,17 +24,25 @@ public class PacientePerfilService {
     @Autowired
     SetorRepository setorRepository;
 
-    public PacientePerfil salvarPerfil(PacientePerfilDto pacientePerfilDto) {
-        PacientePerfil paciente = pacientePerfilDto.mapearPacientePerfil();
+    public ResponseEntity<?> salvarPerfil(PacientePerfilDto pacientePerfilDto) {
+        try {
+            PacientePerfil paciente = pacientePerfilDto.mapearPacientePerfil();
 
-        Optional<PacientePerfil> pacienteExistente = pacientePerfilRepository.findByrg(paciente.getRg());
+            Optional<PacientePerfil> pacienteExistente = pacientePerfilRepository.findByrg(paciente.getRg());
 
-        if (pacienteExistente.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Paciente Já Cadastrado");
+            if (pacienteExistente.isPresent()) {
+                throw new RegistroDuplicadoException("Paciente com esse RG já existe.");
+            }
+
+            PacientePerfil pacienteSalvo = pacientePerfilRepository.save(paciente);
+            return ResponseEntity.status(HttpStatus.CREATED).body(pacienteSalvo);
+
+        } catch (RegistroDuplicadoException e) {
+            var erroDTO = RespostaErro.conflito(e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(erroDTO);
         }
-
-        return pacientePerfilRepository.save(paciente);
     }
+
 
     public List<PacientePerfil> verTodosPacientes() {
         return pacientePerfilRepository.findAll();

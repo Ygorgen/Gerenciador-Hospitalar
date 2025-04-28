@@ -26,9 +26,8 @@ public class PacientePerfilController {
     private PacientePerfilService pacientePerfilService;
 
     @PostMapping("/cadastro")
-    public ResponseEntity<PacientePerfil> cadastrarPaciente(@RequestBody PacientePerfilDto pacienteDto) {
-        PacientePerfil pacientePerfil = pacientePerfilService.salvarPerfil(pacienteDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(pacientePerfil);
+    public ResponseEntity<?> cadastrarPaciente(@RequestBody PacientePerfilDto pacienteDto) {
+        return pacientePerfilService.salvarPerfil(pacienteDto);
     }
 
     @GetMapping
