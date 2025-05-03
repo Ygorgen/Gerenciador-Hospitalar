@@ -3,6 +3,7 @@ package com.GerenciamentoHP.Model;
 import java.time.LocalDate;
 import java.util.List;
 
+import jakarta.validation.constraints.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -10,7 +11,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
@@ -26,6 +26,7 @@ public class PacientePerfil {
     @NotBlank
     private String nome;
 
+    @NotNull(message = "O RG não pode ser nulo.")
     private Integer rg;
 
     private LocalDate dataNascimento;

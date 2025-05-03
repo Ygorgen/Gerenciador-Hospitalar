@@ -5,10 +5,12 @@ import java.util.Optional;
 
 import com.GerenciamentoHP.DTO.RespostaErro;
 import com.GerenciamentoHP.Exceptions.RegistroDuplicadoException;
+import com.GerenciamentoHP.Exceptions.RegistroErroPadraoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.ErrorResponseException;
 import org.springframework.web.server.ResponseStatusException;
 import com.GerenciamentoHP.DTO.PacientePerfilDto;
 import com.GerenciamentoHP.Model.PacientePerfil;
@@ -43,7 +45,6 @@ public class PacientePerfilService {
         }
     }
 
-
     public List<PacientePerfil> verTodosPacientes() {
         return pacientePerfilRepository.findAll();
     }
@@ -58,22 +59,30 @@ public class PacientePerfilService {
         return pacientePerfilRepository.findById(atendimento);
     }
 
-    public ResponseEntity<PacientePerfil> atualizarPacientePerfil(PacientePerfil pacientePerfil) {
-        if (pacientePerfil.getAtendimento() == null) {
-            return ResponseEntity.badRequest().body(null);
+    public ResponseEntity<?> atualizarPacientePerfil(PacientePerfil pacientePerfil) {
+        try {
+            if (pacientePerfil.getAtendimento() == null) {
+                throw new RegistroErroPadraoException("O ID do atendimento não pode ser nulo.");
+            }
+
+            Optional<PacientePerfil> pacienteExistente = pacientePerfilRepository.findById(pacientePerfil.getAtendimento());
+
+            if (pacienteExistente.isPresent()) {
+                PacientePerfil paciente = pacienteExistente.get();
+
+                paciente.setNome(pacientePerfil.getNome());
+                paciente.setRg(pacientePerfil.getRg());
+                paciente.setPlano(pacientePerfil.getPlano());
+
+                PacientePerfil pacienteAtualizado = pacientePerfilRepository.save(paciente);
+                return ResponseEntity.ok(pacienteAtualizado);
+            } else {
+                throw new RegistroErroPadraoException("Paciente não encontrado");
+            }
+        } catch (RegistroErroPadraoException e) {
+            var erroDTO = RespostaErro.respostaPadrao(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erroDTO);
         }
-
-        return pacientePerfilRepository.findById(pacientePerfil.getAtendimento())
-                .map(existente -> {
-
-                    existente.setNome(pacientePerfil.getNome());
-                    existente.setRg(pacientePerfil.getRg());
-                    existente.setPlano(pacientePerfil.getPlano());
-
-                    return ResponseEntity.status(HttpStatus.CREATED)
-                            .body(pacientePerfilRepository.save(existente));
-                })
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     public void deletarPaciente(Long id) {
@@ -86,3 +95,4 @@ public class PacientePerfilService {
     }
 
 }
+

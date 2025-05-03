@@ -1,6 +1,7 @@
 package com.GerenciamentoHP.Controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,15 +41,10 @@ public class PacientePerfilController {
         return pacientePerfilService.buscarPorRg(rg);
     }
 
-    @PutMapping("/{atendimento}")
-    public ResponseEntity<PacientePerfil> atualizarPacientePerfil(@PathVariable Long atendimento,
-            @Valid @RequestBody PacientePerfil pacientePerfil) {
-        if (atendimento == null) {
-            return ResponseEntity.badRequest().body(null);
-        }
+    @PutMapping("/atualizar-perfil/{atendimento}")
+    public ResponseEntity<?> atualizarPacientePerfil(@PathVariable Long atendimento, @RequestBody PacientePerfil pacientePerfil) {
 
         pacientePerfil.setAtendimento(atendimento);
-
         return pacientePerfilService.atualizarPacientePerfil(pacientePerfil);
     }
 
