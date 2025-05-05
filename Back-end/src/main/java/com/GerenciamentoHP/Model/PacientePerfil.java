@@ -26,8 +26,9 @@ public class PacientePerfil {
     @NotBlank
     private String nome;
 
-    @NotNull(message = "O RG não pode ser nulo.")
-    private Integer rg;
+    @NotBlank(message = "RG É UM CAMPO OBRIGATÓRIO.")
+    @Size(min = 10, max = 11, message = "O RG DEVE CONTER ENTRE 10 E 11 NÚMEROS")
+    private String rg;
 
     private LocalDate dataNascimento;
 

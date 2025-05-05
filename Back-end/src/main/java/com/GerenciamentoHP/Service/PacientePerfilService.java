@@ -41,7 +41,7 @@ public class PacientePerfilService {
 
         } catch (RegistroDuplicadoException e) {
             var erroDTO = RespostaErro.conflito(e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(erroDTO);
+            return ResponseEntity.status(erroDTO.status()).body(erroDTO);
         }
     }
 
@@ -49,7 +49,7 @@ public class PacientePerfilService {
         return pacientePerfilRepository.findAll();
     }
 
-    public ResponseEntity<PacientePerfil> buscarPorRg(Integer rg) {
+    public ResponseEntity<PacientePerfil> buscarPorRg(String rg) {
         return pacientePerfilRepository.findByrg(rg)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -81,7 +81,7 @@ public class PacientePerfilService {
             }
         } catch (RegistroErroPadraoException e) {
             var erroDTO = RespostaErro.respostaPadrao(e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erroDTO);
+            return ResponseEntity.status(erroDTO.status()).body(erroDTO);
         }
     }
 
@@ -93,6 +93,5 @@ public class PacientePerfilService {
         }
         pacientePerfilRepository.delete(paciente.get());
     }
-
 }
 

@@ -6,7 +6,7 @@ import com.GerenciamentoHP.Model.PacientePerfil;
 
 public record PacientePerfilDto(
                 String nome,
-                Integer rg,
+                String rg,
                 LocalDate dataNascimento,
                 String plano
                 ) {

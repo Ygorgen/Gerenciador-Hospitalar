@@ -8,6 +8,6 @@ public interface PacientePerfilRepository extends JpaRepository<PacientePerfil,L
     
     Optional<PacientePerfil> findById(Long atendimento);
 
-    Optional<PacientePerfil> findByrg(Integer rg);
+    Optional<PacientePerfil> findByrg(String rg);
 
 }

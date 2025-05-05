@@ -37,7 +37,7 @@ public class PacientePerfilController {
     }
 
     @GetMapping("{rg}")
-    public ResponseEntity<PacientePerfil> buscarPacientePorRg(@PathVariable Integer rg) {
+    public ResponseEntity<PacientePerfil> buscarPacientePorRg(@PathVariable String rg) {
         return pacientePerfilService.buscarPorRg(rg);
     }
 
