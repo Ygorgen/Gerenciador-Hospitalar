@@ -32,8 +32,6 @@ public class PacientePerfil {
 
     private LocalDate dataNascimento;
 
-    private String plano;
-
     @CreatedDate
     private LocalDate dataCadastro;
 

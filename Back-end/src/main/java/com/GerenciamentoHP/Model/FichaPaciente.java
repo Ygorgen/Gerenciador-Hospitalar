@@ -2,6 +2,8 @@ package com.GerenciamentoHP.Model;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -22,6 +24,7 @@ public class FichaPaciente {
 
     private String plano;
 
+    @NotBlank
     private String diagnostico;
 
     private LocalDate dataInternacao;

@@ -72,7 +72,6 @@ public class PacientePerfilService {
 
                 paciente.setNome(pacientePerfil.getNome());
                 paciente.setRg(pacientePerfil.getRg());
-                paciente.setPlano(pacientePerfil.getPlano());
 
                 PacientePerfil pacienteAtualizado = pacientePerfilRepository.save(paciente);
                 return ResponseEntity.ok(pacienteAtualizado);

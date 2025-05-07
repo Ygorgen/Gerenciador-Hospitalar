@@ -27,7 +27,7 @@ public class PacientePerfilController {
     private PacientePerfilService pacientePerfilService;
 
     @PostMapping("/cadastro")
-    public ResponseEntity<?> cadastrarPaciente(@RequestBody PacientePerfilDto pacienteDto) {
+    public ResponseEntity<?> cadastrarPaciente(@RequestBody @Valid PacientePerfilDto pacienteDto) {
         return pacientePerfilService.salvarPerfil(pacienteDto);
     }
 
@@ -42,7 +42,7 @@ public class PacientePerfilController {
     }
 
     @PutMapping("/atualizar-perfil/{atendimento}")
-    public ResponseEntity<?> atualizarPacientePerfil(@PathVariable Long atendimento, @RequestBody PacientePerfil pacientePerfil) {
+    public ResponseEntity<?> atualizarPacientePerfil(@PathVariable @Valid @RequestBody Long atendimento, PacientePerfil pacientePerfil) {
 
         pacientePerfil.setAtendimento(atendimento);
         return pacientePerfilService.atualizarPacientePerfil(pacientePerfil);
