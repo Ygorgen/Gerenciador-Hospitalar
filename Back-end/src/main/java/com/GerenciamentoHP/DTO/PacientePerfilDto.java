@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Size;
 
 public record PacientePerfilDto(
 
-        @NotBlank
+        @NotBlank(message = "NOME É UM CAMPO OBRIGATÓRIO")
         String nome,
 
         @NotBlank(message = "RG É UM CAMPO OBRIGATÓRIO.")
