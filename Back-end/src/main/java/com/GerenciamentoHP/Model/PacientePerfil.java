@@ -23,11 +23,10 @@ public class PacientePerfil {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long atendimento;
 
-    @NotBlank
+    @NotBlank(message = "O nome é obrigatório")
     private String nome;
 
     @NotBlank(message = "RG É UM CAMPO OBRIGATÓRIO.")
-    @Size(min = 10, max = 11, message = "O RG DEVE CONTER ENTRE 10 E 11 NÚMEROS")
     private String rg;
 
     private LocalDate dataNascimento;

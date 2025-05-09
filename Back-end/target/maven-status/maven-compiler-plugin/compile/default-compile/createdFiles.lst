@@ -15,5 +15,6 @@ com\GerenciamentoHP\DTO\RespostaErro.class
 com\GerenciamentoHP\Exceptions\RegistroDuplicadoException.class
 com\GerenciamentoHP\DTO\PacientePerfilDto.class
 com\GerenciamentoHP\Repository\SetorRepository.class
+com\GerenciamentoHP\Controller\common\GlobalExceptionHandler.class
 com\GerenciamentoHP\Controller\FichaPacienteController.class
 com\GerenciamentoHP\Service\FichaPacienteService.class

@@ -42,7 +42,7 @@ public class PacientePerfilController {
     }
 
     @PutMapping("/atualizar-perfil/{atendimento}")
-    public ResponseEntity<?> atualizarPacientePerfil(@PathVariable @Valid @RequestBody Long atendimento, PacientePerfil pacientePerfil) {
+    public ResponseEntity<?> atualizarPacientePerfil(@PathVariable Long atendimento, @Valid @RequestBody PacientePerfil pacientePerfil) {
 
         pacientePerfil.setAtendimento(atendimento);
         return pacientePerfilService.atualizarPacientePerfil(pacientePerfil);
