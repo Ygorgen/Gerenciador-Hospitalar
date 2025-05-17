@@ -47,6 +47,6 @@ public class FichaPaciente {
     private PacientePerfil pacientePerfil;
 
     @ManyToOne
-    @JsonIgnoreProperties("fichasPacientes")
+    @JsonIgnoreProperties("fichaPaciente")
     private Setor setor;
 }

@@ -3,6 +3,7 @@ package com.GerenciamentoHP.Model;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -39,5 +40,6 @@ public class PacientePerfil {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pacientePerfil", cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties("pacientePerfil")
+    @JsonIgnore
     private List<FichaPaciente> fichaPaciente;
 }

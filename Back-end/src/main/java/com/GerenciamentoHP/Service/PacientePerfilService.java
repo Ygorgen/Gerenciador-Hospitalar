@@ -3,16 +3,16 @@ package com.GerenciamentoHP.Service;
 import java.util.List;
 import java.util.Optional;
 
-import com.GerenciamentoHP.DTO.RespostaErro;
+import com.GerenciamentoHP.Controller.DTO.RespostaErro;
+import com.GerenciamentoHP.Controller.mappers.PacienteMapper;
 import com.GerenciamentoHP.Exceptions.RegistroDuplicadoException;
-import com.GerenciamentoHP.Exceptions.RegistroErroPadraoException;
+import com.GerenciamentoHP.Exceptions.OperacaoNaoPermitidaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.ErrorResponseException;
 import org.springframework.web.server.ResponseStatusException;
-import com.GerenciamentoHP.DTO.PacientePerfilDto;
+import com.GerenciamentoHP.Controller.DTO.PacientePerfilDto;
 import com.GerenciamentoHP.Model.PacientePerfil;
 import com.GerenciamentoHP.Repository.PacientePerfilRepository;
 import com.GerenciamentoHP.Repository.SetorRepository;
@@ -24,25 +24,24 @@ public class PacientePerfilService {
     private PacientePerfilRepository pacientePerfilRepository;
 
     @Autowired
-    SetorRepository setorRepository;
+    private PacienteMapper mapper;
 
-    public ResponseEntity<?> salvarPerfil(PacientePerfilDto pacientePerfilDto) {
-        try {
-            PacientePerfil paciente = pacientePerfilDto.mapearPacientePerfil();
+    @Autowired
+    private SetorRepository setorRepository;
 
-            Optional<PacientePerfil> pacienteExistente = pacientePerfilRepository.findByrg(paciente.getRg());
+    public ResponseEntity<PacientePerfil> salvarPerfil(PacientePerfilDto dto) {
 
-            if (pacienteExistente.isPresent()) {
-                throw new RegistroDuplicadoException("Paciente com esse RG já existe.");
-            }
+        PacientePerfil paciente = mapper.toEntity(dto);
 
-            PacientePerfil pacienteSalvo = pacientePerfilRepository.save(paciente);
-            return ResponseEntity.status(HttpStatus.CREATED).body(pacienteSalvo);
+        Optional<PacientePerfil> pacienteExistente = pacientePerfilRepository.findByrg(paciente.getRg());
 
-        } catch (RegistroDuplicadoException e) {
-            var erroDTO = RespostaErro.conflito(e.getMessage());
-            return ResponseEntity.status(erroDTO.status()).body(erroDTO);
+        if (pacienteExistente.isPresent()) {
+            throw new RegistroDuplicadoException("Paciente com esse RG já existe.");
         }
+
+        PacientePerfil pacienteSalvo = pacientePerfilRepository.save(paciente);
+        return ResponseEntity.status(HttpStatus.CREATED).body(pacienteSalvo);
+
     }
 
     public List<PacientePerfil> verTodosPacientes() {
@@ -59,28 +58,23 @@ public class PacientePerfilService {
         return pacientePerfilRepository.findById(atendimento);
     }
 
-    public ResponseEntity<?> atualizarPacientePerfil(PacientePerfil pacientePerfil) {
-        try {
-            if (pacientePerfil.getAtendimento() == null) {
-                throw new RegistroErroPadraoException("O ID do atendimento não pode ser nulo.");
-            }
+    public ResponseEntity<PacientePerfil> atualizarPacientePerfil(PacientePerfil pacientePerfil) {
 
-            Optional<PacientePerfil> pacienteExistente = pacientePerfilRepository.findById(pacientePerfil.getAtendimento());
+        if (pacientePerfil.getAtendimento() == null) {
+            throw new OperacaoNaoPermitidaException("O ID do atendimento não pode ser nulo.");
+        }
+        Optional<PacientePerfil> pacienteExistente = pacientePerfilRepository.findById(pacientePerfil.getAtendimento());
 
-            if (pacienteExistente.isPresent()) {
-                PacientePerfil paciente = pacienteExistente.get();
+        if (pacienteExistente.isPresent()) {
+            PacientePerfil paciente = pacienteExistente.get();
 
-                paciente.setNome(pacientePerfil.getNome());
-                paciente.setRg(pacientePerfil.getRg());
+            paciente.setNome(pacientePerfil.getNome());
+            paciente.setRg(pacientePerfil.getRg());
 
-                PacientePerfil pacienteAtualizado = pacientePerfilRepository.save(paciente);
-                return ResponseEntity.ok(pacienteAtualizado);
-            } else {
-                throw new RegistroErroPadraoException("Paciente não encontrado");
-            }
-        } catch (RegistroErroPadraoException e) {
-            var erroDTO = RespostaErro.respostaPadrao(e.getMessage());
-            return ResponseEntity.status(erroDTO.status()).body(erroDTO);
+            PacientePerfil pacienteAtualizado = pacientePerfilRepository.save(paciente);
+            return ResponseEntity.ok(pacienteAtualizado);
+        } else {
+            throw new OperacaoNaoPermitidaException("Paciente não encontrado");
         }
     }
 

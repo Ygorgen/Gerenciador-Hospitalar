@@ -2,6 +2,7 @@ package com.GerenciamentoHP.Model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
@@ -22,5 +23,6 @@ public class Setor {
 
     @OneToMany(mappedBy = "setor", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("setor")
+    @JsonIgnore
     private List<FichaPaciente> fichasPacientes;
 }
