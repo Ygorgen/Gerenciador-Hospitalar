@@ -9,6 +9,9 @@ import com.GerenciamentoHP.Exceptions.RegistroDuplicadoException;
 import com.GerenciamentoHP.Exceptions.OperacaoNaoPermitidaException;
 import com.GerenciamentoHP.Repository.Specs.PacientePerfilSpecs;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +49,7 @@ public class PacientePerfilService {
 
     }
 
-        public List<PacientePerfil>pesquisa(String nome,Long atendimento ){
+        public Page<PacientePerfil> pesquisa(String nome, Long atendimento,Integer pagina,Integer tamanhoPagina ){
 
             Specification<PacientePerfil> specs = Specification.where(((root, query, cb) ->cb.conjunction() ));
 
@@ -57,7 +60,9 @@ public class PacientePerfilService {
                 specs =specs.and(PacientePerfilSpecs.atendimentoEqual(atendimento));
             }
 
-            return pacientePerfilRepository.findAll(specs);
+            Pageable pageRequst = PageRequest.of(pagina,tamanhoPagina);
+
+            return pacientePerfilRepository.findAll(specs,pageRequst);
         }
 
     public List<PacientePerfil> verTodosPacientes() {

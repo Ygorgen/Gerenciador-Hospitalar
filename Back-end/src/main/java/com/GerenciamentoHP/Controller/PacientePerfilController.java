@@ -1,11 +1,10 @@
 package com.GerenciamentoHP.Controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import com.GerenciamentoHP.Controller.DTO.ResultadoPesquisaPacienteDTO;
 import com.GerenciamentoHP.Controller.mappers.PacienteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.GerenciamentoHP.Controller.DTO.PacientePerfilDto;
@@ -35,18 +34,25 @@ public class PacientePerfilController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ResultadoPesquisaPacienteDTO>> pesquisa(
+    public ResponseEntity<Page<PacientePerfilDto>> pesquisa(
             @RequestParam(value = "nome", required = false)
             String nome,
 
+            @RequestParam(value = "pagina",defaultValue = "0")
+            Integer pagina,
+
+            @RequestParam(value = "tamanho-pagina",defaultValue = "10")
+            Integer tamanhoPagina,
+
             @RequestParam(value = "atendimento", required = false)
-            Long atendimento) {
+            Long atendimento
+    ){
 
-        var resultado = pacientePerfilService.pesquisa(nome, atendimento);
-        var lista =
-                resultado.stream().map(mapper::toEntity).collect(Collectors.toList());
+        Page<PacientePerfil> paginaResultado = pacientePerfilService.pesquisa(nome, atendimento,pagina,tamanhoPagina);
 
-        return ResponseEntity.ok(lista);
+        Page<PacientePerfilDto> resultado = paginaResultado.map(mapper::toDTO);
+
+        return ResponseEntity.ok(resultado);
     }
 
     @GetMapping("{rg}")
