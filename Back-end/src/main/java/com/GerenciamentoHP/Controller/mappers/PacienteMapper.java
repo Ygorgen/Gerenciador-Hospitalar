@@ -2,6 +2,7 @@ package com.GerenciamentoHP.Controller.mappers;
 
 
 import com.GerenciamentoHP.Controller.DTO.PacientePerfilDto;
+import com.GerenciamentoHP.Controller.DTO.ResultadoPesquisaPacienteDTO;
 import com.GerenciamentoHP.Model.PacientePerfil;
 import org.mapstruct.Mapper;
 
@@ -11,4 +12,6 @@ public interface PacienteMapper {
     PacientePerfil toEntity(PacientePerfilDto dto);
 
     PacientePerfilDto toDTO(PacientePerfil pacientePerfil);
+
+    ResultadoPesquisaPacienteDTO toEntity(PacientePerfil pacientePerfil);
 }

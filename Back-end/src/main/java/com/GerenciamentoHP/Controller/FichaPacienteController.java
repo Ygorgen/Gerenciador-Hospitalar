@@ -1,5 +1,8 @@
 package com.GerenciamentoHP.Controller;
 
+import com.GerenciamentoHP.Controller.DTO.ResultadoPesquisaPacienteDTO;
+import com.GerenciamentoHP.Model.PacientePerfil;
+import com.GerenciamentoHP.Repository.PacientePerfilRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +31,8 @@ public class FichaPacienteController {
     public List <FichaPaciente> findAll(){
         return fichaPacienteService.verTodasFichas();
     }
+
+
 
     @DeleteMapping
     public ResponseEntity<Void> deletarFichaPaciente(@PathVariable Long id){

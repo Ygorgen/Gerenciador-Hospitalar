@@ -1,17 +1,13 @@
 package com.GerenciamentoHP.Controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.GerenciamentoHP.Controller.DTO.ResultadoPesquisaPacienteDTO;
+import com.GerenciamentoHP.Controller.mappers.PacienteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.GerenciamentoHP.Controller.DTO.PacientePerfilDto;
 import com.GerenciamentoHP.Model.PacientePerfil;
 import com.GerenciamentoHP.Service.PacientePerfilService;
@@ -25,14 +21,32 @@ public class PacientePerfilController {
     @Autowired
     private PacientePerfilService pacientePerfilService;
 
+    @Autowired
+    private PacienteMapper mapper;
+
     @PostMapping("/cadastro")
     public ResponseEntity<?> cadastrarPaciente(@RequestBody @Valid PacientePerfilDto pacienteDto) {
         return pacientePerfilService.salvarPerfil(pacienteDto);
     }
 
-    @GetMapping
+    @GetMapping("/pacientes")
     public List<PacientePerfil> findAll() {
         return pacientePerfilService.verTodosPacientes();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ResultadoPesquisaPacienteDTO>> pesquisa(
+            @RequestParam(value = "nome", required = false)
+            String nome,
+
+            @RequestParam(value = "atendimento", required = false)
+            Long atendimento) {
+
+        var resultado = pacientePerfilService.pesquisa(nome, atendimento);
+        var lista =
+                resultado.stream().map(mapper::toEntity).collect(Collectors.toList());
+
+        return ResponseEntity.ok(lista);
     }
 
     @GetMapping("{rg}")

@@ -7,7 +7,9 @@ import com.GerenciamentoHP.Controller.DTO.RespostaErro;
 import com.GerenciamentoHP.Controller.mappers.PacienteMapper;
 import com.GerenciamentoHP.Exceptions.RegistroDuplicadoException;
 import com.GerenciamentoHP.Exceptions.OperacaoNaoPermitidaException;
+import com.GerenciamentoHP.Repository.Specs.PacientePerfilSpecs;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -43,6 +45,20 @@ public class PacientePerfilService {
         return ResponseEntity.status(HttpStatus.CREATED).body(pacienteSalvo);
 
     }
+
+        public List<PacientePerfil>pesquisa(String nome,Long atendimento ){
+
+            Specification<PacientePerfil> specs = Specification.where(((root, query, cb) ->cb.conjunction() ));
+
+            if (nome != null){
+                specs = specs.and(PacientePerfilSpecs.nomelike(nome));
+            }
+            if (atendimento!= null){
+                specs =specs.and(PacientePerfilSpecs.atendimentoEqual(atendimento));
+            }
+
+            return pacientePerfilRepository.findAll(specs);
+        }
 
     public List<PacientePerfil> verTodosPacientes() {
         return pacientePerfilRepository.findAll();
