@@ -1,4 +1,6 @@
+com\GerenciamentoHP\Controller\LoginViewController.class
 com\GerenciamentoHP\Exceptions\OperacaoNaoPermitidaException.class
+com\GerenciamentoHP\Config\WebConfiguration.class
 com\GerenciamentoHP\Exceptions\RegistroErroNotFoundException.class
 com\GerenciamentoHP\Repository\Specs\PacientePerfilSpecs.class
 com\GerenciamentoHP\Repository\FichaPacienteRepository.class
@@ -21,4 +23,5 @@ com\GerenciamentoHP\Controller\SetorController.class
 com\GerenciamentoHP\Model\PacientePerfil.class
 com\GerenciamentoHP\Controller\DTO\RespostaErro.class
 com\GerenciamentoHP\Controller\PacientePerfilController.class
+com\GerenciamentoHP\Config\SecurityConfiguration.class
 com\GerenciamentoHP\Exceptions\RegistroDuplicadoException.class
