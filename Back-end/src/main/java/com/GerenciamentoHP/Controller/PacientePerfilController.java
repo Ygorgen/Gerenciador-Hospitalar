@@ -9,12 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.GerenciamentoHP.Controller.DTO.PacientePerfilDto;
 import com.GerenciamentoHP.Model.PacientePerfil;
-import com.GerenciamentoHP.Service.PacientePerfilService;
+import com.GerenciamentoHP.Services.PacientePerfilService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/pacientes-perfil")
+@RequestMapping("/api")
 public class PacientePerfilController {
 
     @Autowired

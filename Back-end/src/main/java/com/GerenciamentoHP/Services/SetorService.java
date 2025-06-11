@@ -1,4 +1,4 @@
-package com.GerenciamentoHP.Service;
+package com.GerenciamentoHP.Services;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package com.GerenciamentoHP.Service;
+package com.GerenciamentoHP.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

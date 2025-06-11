@@ -1,9 +1,8 @@
-package com.GerenciamentoHP.Service;
+package com.GerenciamentoHP.Services;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.GerenciamentoHP.Controller.DTO.RespostaErro;
 import com.GerenciamentoHP.Controller.mappers.PacienteMapper;
 import com.GerenciamentoHP.Exceptions.RegistroDuplicadoException;
 import com.GerenciamentoHP.Exceptions.OperacaoNaoPermitidaException;
