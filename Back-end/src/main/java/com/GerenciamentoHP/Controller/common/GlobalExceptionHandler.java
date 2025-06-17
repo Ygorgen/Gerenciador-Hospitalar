@@ -2,6 +2,7 @@ package com.GerenciamentoHP.Controller.common;
 
 import com.GerenciamentoHP.Controller.DTO.CampodeErros;
 import com.GerenciamentoHP.Controller.DTO.RespostaErro;
+import com.GerenciamentoHP.Exceptions.InvalidJwtAuthenticationException;
 import com.GerenciamentoHP.Exceptions.OperacaoNaoPermitidaException;
 import com.GerenciamentoHP.Exceptions.RegistroDuplicadoException;
 import org.springframework.http.HttpStatus;
@@ -44,6 +45,14 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public RespostaErro handleErroNaoTratados(RuntimeException e){
         return new RespostaErro(HttpStatus.INTERNAL_SERVER_ERROR.value(),"ERRO INESPERADO. ENTRE EM CONTATO PARA OBTER MAIS INFORMAÇÕES!"
+                ,List.of());
+
+    }
+
+    @ExceptionHandler(InvalidJwtAuthenticationException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public RespostaErro InvalidJwtAuthenticationException(RuntimeException e){
+        return new RespostaErro(HttpStatus.FORBIDDEN.value(),"Authentication Inválid!"
                 ,List.of());
 
     }
