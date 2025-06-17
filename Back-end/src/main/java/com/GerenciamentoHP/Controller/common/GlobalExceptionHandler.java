@@ -5,13 +5,17 @@ import com.GerenciamentoHP.Controller.DTO.RespostaErro;
 import com.GerenciamentoHP.Exceptions.InvalidJwtAuthenticationException;
 import com.GerenciamentoHP.Exceptions.OperacaoNaoPermitidaException;
 import com.GerenciamentoHP.Exceptions.RegistroDuplicadoException;
+import com.GerenciamentoHP.Exceptions.RequiredObjectIsNullException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,5 +59,11 @@ public class GlobalExceptionHandler {
         return new RespostaErro(HttpStatus.FORBIDDEN.value(),"Authentication Inválid!"
                 ,List.of());
 
+    }
+
+    @ExceptionHandler(RequiredObjectIsNullException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public RespostaErro RequiredObjectIsNullException(RequiredObjectIsNullException e) {
+        return RespostaErro.respostaPadrao(e.getMessage());
     }
 }
