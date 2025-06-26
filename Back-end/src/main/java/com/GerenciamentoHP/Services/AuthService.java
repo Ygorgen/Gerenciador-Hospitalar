@@ -4,7 +4,9 @@ import com.GerenciamentoHP.Controller.DTO.Security.AccountCredentialsDTO;
 import com.GerenciamentoHP.Controller.DTO.Security.TokenDTO;
 import com.GerenciamentoHP.Controller.mappers.AccountCredentialsMapper;
 import com.GerenciamentoHP.Exceptions.RequiredObjectIsNullException;
+import com.GerenciamentoHP.Model.Permission;
 import com.GerenciamentoHP.Model.User;
+import com.GerenciamentoHP.Repository.PermissionRepository;
 import com.GerenciamentoHP.Repository.UserRepository;
 import com.GerenciamentoHP.Security.Jwt.JwtTokenProvider;
 import org.slf4j.Logger;
@@ -20,6 +22,7 @@ import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -28,6 +31,8 @@ public class AuthService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private PermissionRepository permissionRepository;
 
     @Autowired
     private AccountCredentialsMapper mapper;
@@ -86,8 +91,15 @@ public class AuthService {
         entity.setCredentialsNonExpired(true);
         entity.setEnabled(true);
 
-        var dto = userRepository.save(entity);
-        return new AccountCredentialsDTO(dto.getUsername(), dto.getPassword(), dto.getFullName());
+        // 🔐 Adiciona a permissão COMMON_USER
+        Permission commonUserPermission = permissionRepository.findByDescription("COMMON_USER")
+                .orElseThrow(() -> new RuntimeException("Permissão 'COMMON_USER' não encontrada"));
+
+        entity.setPermissions(List.of(commonUserPermission));
+
+        var savedUser = userRepository.save(entity);
+
+        return new AccountCredentialsDTO(savedUser.getUsername(), savedUser.getPassword(), savedUser.getFullName());
     }
 
     private String generateHashedPassword(String password) {
