@@ -1,1 +1,4 @@
-C:\Users\Master Chief\Desktop\Gerenciador-Hospitalar\Back-end\src\test\java\com\GerenciamentoHP\GerenciamentoHospitalarApplicationTests.java
+C:\Users\Master Chief\Desktop\Gerenciador-Hospitalar\Back-end\src\test\java\com\GerenciamentoHP\integrationtest\testcontainers\AbstractIntegrationTest.java
+C:\Users\Master Chief\Desktop\Gerenciador-Hospitalar\Back-end\src\test\java\com\GerenciamentoHP\unittests\services\FichaPacienteServiceTest.java
+C:\Users\Master Chief\Desktop\Gerenciador-Hospitalar\Back-end\src\test\java\com\GerenciamentoHP\config\TestConfigs.java
+C:\Users\Master Chief\Desktop\Gerenciador-Hospitalar\Back-end\src\test\java\com\GerenciamentoHP\integrationtest\swagger\SwaggerIntegrationTest.java
