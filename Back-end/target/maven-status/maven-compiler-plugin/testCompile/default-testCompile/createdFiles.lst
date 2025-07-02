@@ -1,1 +1,5 @@
-com\GerenciamentoHP\GerenciamentoHospitalarApplicationTests.class
+com\GerenciamentoHP\integrationtest\testcontainers\AbstractIntegrationTest$Initializer.class
+com\GerenciamentoHP\integrationtest\testcontainers\AbstractIntegrationTest.class
+com\GerenciamentoHP\config\TestConfigs.class
+com\GerenciamentoHP\integrationtest\swagger\SwaggerIntegrationTest.class
+com\GerenciamentoHP\unittests\services\FichaPacienteServiceTest.class
