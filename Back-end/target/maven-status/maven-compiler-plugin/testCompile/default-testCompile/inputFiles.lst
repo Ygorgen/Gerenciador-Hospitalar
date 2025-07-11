@@ -1,4 +1,6 @@
-C:\Users\Master Chief\Desktop\Gerenciador-Hospitalar\Back-end\src\test\java\com\GerenciamentoHP\integrationtest\testcontainers\AbstractIntegrationTest.java
-C:\Users\Master Chief\Desktop\Gerenciador-Hospitalar\Back-end\src\test\java\com\GerenciamentoHP\unittests\services\FichaPacienteServiceTest.java
-C:\Users\Master Chief\Desktop\Gerenciador-Hospitalar\Back-end\src\test\java\com\GerenciamentoHP\config\TestConfigs.java
-C:\Users\Master Chief\Desktop\Gerenciador-Hospitalar\Back-end\src\test\java\com\GerenciamentoHP\integrationtest\swagger\SwaggerIntegrationTest.java
+C:\Users\Master Chief\Desktop\Java\Gerenciador-Hospitalar\Back-end\src\test\java\com\GerenciamentoHP\integrationtest\dto\AccountCredentialsDTO.java
+C:\Users\Master Chief\Desktop\Java\Gerenciador-Hospitalar\Back-end\src\test\java\com\GerenciamentoHP\integrationtest\controller\withjson\AuthControllerTest.java
+C:\Users\Master Chief\Desktop\Java\Gerenciador-Hospitalar\Back-end\src\test\java\com\GerenciamentoHP\integrationtest\testcontainers\AbstractIntegrationTest.java
+C:\Users\Master Chief\Desktop\Java\Gerenciador-Hospitalar\Back-end\src\test\java\com\GerenciamentoHP\config\TestConfigs.java
+C:\Users\Master Chief\Desktop\Java\Gerenciador-Hospitalar\Back-end\src\test\java\com\GerenciamentoHP\integrationtest\dto\TokenDTO.java
+C:\Users\Master Chief\Desktop\Java\Gerenciador-Hospitalar\Back-end\src\test\java\com\GerenciamentoHP\integrationtest\swagger\SwaggerIntegrationTest.java

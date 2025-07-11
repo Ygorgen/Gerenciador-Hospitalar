@@ -1,5 +1,7 @@
-com\GerenciamentoHP\integrationtest\testcontainers\AbstractIntegrationTest$Initializer.class
+com\GerenciamentoHP\integrationtest\dto\AccountCredentialsDTO.class
 com\GerenciamentoHP\integrationtest\testcontainers\AbstractIntegrationTest.class
+com\GerenciamentoHP\integrationtest\dto\TokenDTO.class
 com\GerenciamentoHP\config\TestConfigs.class
+com\GerenciamentoHP\integrationtest\controller\withjson\AuthControllerTest.class
+com\GerenciamentoHP\integrationtest\testcontainers\AbstractIntegrationTest$Initializer.class
 com\GerenciamentoHP\integrationtest\swagger\SwaggerIntegrationTest.class
-com\GerenciamentoHP\unittests\services\FichaPacienteServiceTest.class

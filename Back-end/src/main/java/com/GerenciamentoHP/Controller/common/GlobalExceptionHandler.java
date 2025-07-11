@@ -8,6 +8,7 @@ import com.GerenciamentoHP.Exceptions.RegistroDuplicadoException;
 import com.GerenciamentoHP.Exceptions.RequiredObjectIsNullException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -65,5 +66,11 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public RespostaErro RequiredObjectIsNullException(RequiredObjectIsNullException e) {
         return RespostaErro.respostaPadrao(e.getMessage());
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public RespostaErro handleBadCredentialsException(BadCredentialsException e) {
+        return new RespostaErro(HttpStatus.FORBIDDEN.value(), "Usuário inexistente ou senha inválida!", List.of());
     }
 }

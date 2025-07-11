@@ -2,20 +2,14 @@ package com.GerenciamentoHP.Controller;
 
 import com.GerenciamentoHP.Controller.DTO.Security.AccountCredentialsDTO;
 import com.GerenciamentoHP.Services.AuthService;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @Tag(name = "Authentication Endpoint!")
 @RestController
@@ -28,11 +22,15 @@ public class AuthController implements com.GerenciamentoHP.Controller.Docs.AuthC
     @PostMapping("/signin")
     @Override
     public ResponseEntity<?> signin(@RequestBody AccountCredentialsDTO credentials) {
-        if (credentialsIsInvalid(credentials))return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
+        if (credentialsIsInvalid(credentials))
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
+
         var token = service.signIn(credentials);
 
-        if (token == null) ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
-        return  token;
+        if (token == null)
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
+
+        return token;
     }
 
     @PutMapping("/refresh/{username}")
