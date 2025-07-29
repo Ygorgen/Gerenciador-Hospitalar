@@ -2,21 +2,15 @@ package com.GerenciamentoHP.Controller.common;
 
 import com.GerenciamentoHP.Controller.DTO.CampodeErros;
 import com.GerenciamentoHP.Controller.DTO.RespostaErro;
-import com.GerenciamentoHP.Exceptions.InvalidJwtAuthenticationException;
-import com.GerenciamentoHP.Exceptions.OperacaoNaoPermitidaException;
-import com.GerenciamentoHP.Exceptions.RegistroDuplicadoException;
-import com.GerenciamentoHP.Exceptions.RequiredObjectIsNullException;
+import com.GerenciamentoHP.Exceptions.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.WebRequest;
 
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,7 +49,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(InvalidJwtAuthenticationException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
     public RespostaErro InvalidJwtAuthenticationException(RuntimeException e){
         return new RespostaErro(HttpStatus.FORBIDDEN.value(),"Authentication Inválid!"
                 ,List.of());
@@ -72,5 +66,17 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public RespostaErro handleBadCredentialsException(BadCredentialsException e) {
         return new RespostaErro(HttpStatus.FORBIDDEN.value(), "Usuário inexistente ou senha inválida!", List.of());
+    }
+
+    @ExceptionHandler(FileNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public RespostaErro handleFileNotFoundlException(BadCredentialsException e) {
+        return new RespostaErro(HttpStatus.NOT_FOUND.value(), "Arquivo não encontrado!", List.of());
+    }
+
+    @ExceptionHandler(FileStorageException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public RespostaErro handleFileStorageException(BadCredentialsException e) {
+        return new RespostaErro(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Erro ao armazenar o arquivo!", List.of());
     }
 }
