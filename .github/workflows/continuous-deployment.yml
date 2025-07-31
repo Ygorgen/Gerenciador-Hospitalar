@@ -28,7 +28,7 @@ jobs:
 
 
       - name: Build Application .jar
-        working-directory: ./Back-end
+        working-directory: ./Java/Gerenciador-Hospitalar/Back-end
         run: mvn clean package
 
       - name: Docker Compose Build
