@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout source code
+        uses: actions/checkout@v4
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -18,26 +19,24 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
-
-      - name: Setup Java 21
+      - name: Set up Java 21
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'adopt'
           cache: maven
+          cache-dependency-path: ./Back-end/pom.xml
 
-
-      - name: Build Application .jar
+      - name: Build Application JAR
         working-directory: ./Back-end
         run: mvn clean package
 
-      - name: Docker Compose Build
-        working-directory: ./Back-end
+      - name: Build Docker Image with Compose
+        working-directory: .
         run: docker compose build
 
-      - name: Push to Docker Hub Container Registry
+      - name: Push Docker Image to Docker Hub
         run: |
-          docker tag ${{ secrets.DOCKER_USERNAME }}/gerenciador-hospitalar:latest ${{ secrets.DOCKER_USERNAME }}/gerenciador-hospitalar:${{ github.run.id }}
-          
+          docker tag ${{ secrets.DOCKER_USERNAME }}/gerenciador-hospitalar:latest ${{ secrets.DOCKER_USERNAME }}/gerenciador-hospitalar:${{ github.run_id }}
           docker push ${{ secrets.DOCKER_USERNAME }}/gerenciador-hospitalar:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/gerenciador-hospitalar:${{ github.run.id }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/gerenciador-hospitalar:${{ github.run_id }}
