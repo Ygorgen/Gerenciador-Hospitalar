@@ -18,8 +18,26 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
-      - uses: actions/setup-java@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
+
+
+      - name: Build Aplication .jar
+        working-directory: .Java/Gerenciador-Hospitalar/Back-end
+        run : mvn clean package
+
+      - name: Docker Compose Build
+        working-directory: ./Java
+        run: docker compose build
+
+      - name: Push to Docker Hub Container Registry
+        run: |
+          docker tag ${{ secrets.DOCKER_USERNAME }}/gerenciador-hospitalar:latest ${{ secrets.DOCKER_USERNAME }}/gerenciador-hospitalar:${{ github.run.id }}
+          
+          docker push ${{ secrets.DOCKER_USERNAME }}/gerenciador-hospitalar:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/gerenciador-hospitalar:${{ github.run.id }}
