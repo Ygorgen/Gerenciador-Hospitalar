@@ -27,9 +27,9 @@ jobs:
           cache: maven
 
 
-      - name: Build Aplication .jar
-        working-directory: ./Java/Gerenciador-Hospitalar/Back-end
-        run : mvn clean package
+      - name: Build Application .jar
+        working-directory: ./Gerenciador-Hospitalar/Back-end
+        run: mvn clean package
 
       - name: Docker Compose Build
         working-directory: ./Java
