@@ -28,11 +28,11 @@ jobs:
 
 
       - name: Build Application .jar
-        working-directory: ./Java/Gerenciador-Hospitalar/Back-end
+        working-directory: ./Gerenciador-Hospitalar/Back-end
         run: mvn clean package
 
       - name: Docker Compose Build
-        working-directory: ./Java
+        working-directory: ./Gerenciador-Hospitalar
         run: docker compose build
 
       - name: Push to Docker Hub Container Registry
