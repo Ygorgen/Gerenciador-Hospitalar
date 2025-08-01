@@ -20,8 +20,8 @@ services:
   arj-sping-boot:
     image: ygoraraujorb/gerenciador-hospitalar
     restart: always
-    build: ./Gerenciador-Hospitalar/Back-end
-    working_dir: /Gerenciador-Hospitalar/Back-end
+    build: ./Back-end
+    working_dir: /Back-end
     environment:
       TZ: America/Sao_Paulo
       SPRING.DATASOURCE.URL: jdbc:mysql://db:3306/db_GerenciadorHospitalar?createDatabaseIfNotExist=true&serverTimezone=America/Sao_Paulo&useSSl=false
