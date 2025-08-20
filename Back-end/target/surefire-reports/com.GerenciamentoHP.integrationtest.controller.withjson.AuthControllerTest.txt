@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.GerenciamentoHP.integrationtest.controller.withjson.AuthControllerTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 20.12 s -- in com.GerenciamentoHP.integrationtest.controller.withjson.AuthControllerTest

@@ -91,7 +91,7 @@ public class AuthService {
         entity.setCredentialsNonExpired(true);
         entity.setEnabled(true);
 
-        // 🔐 Adiciona a permissão COMMON_USER
+
         Permission commonUserPermission = permissionRepository.findByDescription("COMMON_USER")
                 .orElseThrow(() -> new RuntimeException("Permissão 'COMMON_USER' não encontrada"));
 
@@ -99,7 +99,7 @@ public class AuthService {
 
         var savedUser = userRepository.save(entity);
 
-        return new AccountCredentialsDTO(savedUser.getUsername(), savedUser.getPassword(), savedUser.getFullName());
+        return new AccountCredentialsDTO(savedUser.getUsername(), savedUser.getFullName());
     }
 
     private String generateHashedPassword(String password) {
